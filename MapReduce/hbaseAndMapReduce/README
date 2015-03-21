@@ -1,0 +1,51 @@
+HBase provides mapper and reducer classes called TableMapper and TableReducer and a utility class called TableMapReduceUtil.
+
+ * TableMapper ->
+		Our mapper class should extend TableMapper.
+		Input key to mapper is ImmutableBytesWritable object which has rowkey of HBase table.
+		Input value is Result object (org.apache.hadoop.hbase.client.Result) which contains the requested column families (define the required columns/column families in Scan) from HBase table.
+ * TableReducer ->
+		Our reducer class should extend TableReducer.
+		Output key is NULL.
+		Output value is Put (org.apache.hadoop.hbase.client.Put) object.
+ * MapReduce Driver ->
+		Configure a Scan (org.apache.hadoop.hbase.client.Scan) object. For this scan object we can define many parameters like:
+		Start row.
+		Stop row.
+		Row filter.
+		Column Familiy(s) to retrieve.
+		Column(s) to retrieve.
+		Define input table using TableMapReduceUtil.initTableMapperJob. In this method we can define input table, Mapper, MapOutputKey, MapOutputValue, etc.
+		Define output table using TableMapReduceUtil.initTableReducerJob. In this method we can define output table, Reducer and Partitioner.
+
+ * Deduction ->
+		Whenever we have to write to hbase table use TableMapReduceUtil.initTableReducerJob since it accepts the table name to write the output to.
+
+
+1) ReadAndWriteToHBaseFromMapReduce
+
+ * 1 map 1 reduce
+ * Mapper will parse by rowkey, etc and reducer will write data in test2.
+ * 	TableMapReduceUtil.initTableMapperJob("test1",scan,testMapper.class,ImmutableBytesWritable.class,IntWritable.class,job); // this scan from test1 and pass rows to our testMapper.
+ * 	TableMapReduceUtil.initTableReducerJob("test2",testReducer.class,job); // this takes output from testReducer and write it to test2
+
+
+
+2) ExportHBaseDataToHDFSSequenceFile
+
+ *  It runs only 1 map.
+ * 	TableMapReduceUtil.initTableMapperJob(tableName, s, Exporter.class, null,null, job);
+ * 	job.setNumReduceTasks(0);
+
+
+
+3) ImportHDFSDataFromSequencFileToHBaseTable
+
+ *  It runs only 1 map.
+ *  job.setMapperClass(Importer.class);
+ *  	TableMapReduceUtil.initTableReducerJob(tableName, null, job); // this takes output from Importer mapper class and hence null passed over here and write it to tableName
+								      // basically it needs Put object whoever can provide , it takes, in #1 testReducer.class was providing Put object
+ *      job.setNumReduceTasks(0);
+
+
+Seems like hbase table read and write we can do both in mapper and reducer.
