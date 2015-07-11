@@ -9,6 +9,7 @@ class Person implements ProtoType {
 	String name;
 	public Person(String name) {
 		this.name = name;
+		System.out.println("Got created!!");
 	}
 	@Override
 	public ProtoType doClone() { 
@@ -36,7 +37,7 @@ class Pig implements ProtoType {
 		return new Pig(sound);
 	}
 	public String toString() {
-		return "This dog says " + sound;
+		return "This pig says " + sound;
 	}
 }
 
@@ -49,10 +50,10 @@ public class PrototypeDemo {
 		Person person2 = (Person) person1.doClone();
 		System.out.println("person 2:" + person2);
 
-		Pig dog1 = new Pig("Wooof!");
-		System.out.println("dog 1:" + dog1);
-		Pig dog2 = (Pig) dog1.doClone();
-		System.out.println("dog 2:" + dog2);
+		Pig pig1 = new Pig("Wooof!");
+		System.out.println("pig 1:" + pig1);
+		Pig pig2 = (Pig) pig1.doClone();
+		System.out.println("pig 2:" + pig2);
 
 	}
 

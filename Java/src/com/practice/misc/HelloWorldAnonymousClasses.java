@@ -2,7 +2,8 @@ package com.practice.misc;
 
 
 public class HelloWorldAnonymousClasses {
-
+ 
+    int i=0;
 	interface HelloWorld {
 		public void greet();
 		public void greetSomeone(String someone);
@@ -38,7 +39,8 @@ public class HelloWorldAnonymousClasses {
 	}
 
 	/*
-	This won't work since anonymous classes are local classes and hence it needs to be inside function, that's why moving it to main() function worked.
+	This won't work since anonymous classes are local classes and hence it needs to be inside function, 
+	that's why moving it to main() function worked.
 	HelloWorld spanishGreeting = new HelloWorld() {
 		String name = "ls isla bonita";
 		public void greet() {

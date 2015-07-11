@@ -12,14 +12,15 @@ class ATCMediator implements IATCMediator {
 	private Runway runway;
 	public boolean land;
 
+	@Override
 	public void registerRunway(Runway runway) {
 		this.runway = runway;
 	}
-
+	@Override
 	public void registerFlight(Flight flight) {
 		this.flight = flight;
 	}
-
+	@Override
 	public boolean isLandingOk() {
 		return land;
 	}
@@ -73,7 +74,7 @@ class Runway implements IATCCommand {
 
 }
 
-class Mediator{
+class MediatorDemo2{
 	public static void main(String args[]) {
 
 		IATCMediator atcMediator = new ATCMediator();

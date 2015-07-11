@@ -4,6 +4,18 @@ interface Command {
 	public void execute();
 }
 
+class Lunch {
+	public void makeLunch() {
+		System.out.println("Lunch is being made");
+	}
+}
+
+class Dinner {
+	public void makeDinner() {
+		System.out.println("Dinner is being made");
+	}
+}
+
 class LunchCommand implements Command {
 	Lunch lunch; // a receiver
 	public LunchCommand(Lunch lunch) {
@@ -25,18 +37,6 @@ class DinnerCommand implements Command {
 	@Override
 	public void execute() { // invokes the appropriate action on the receiver.
 		dinner.makeDinner();
-	}
-}
-
-class Lunch {
-	public void makeLunch() {
-		System.out.println("Lunch is being made");
-	}
-}
-
-class Dinner {
-	public void makeDinner() {
-		System.out.println("Dinner is being made");
 	}
 }
 

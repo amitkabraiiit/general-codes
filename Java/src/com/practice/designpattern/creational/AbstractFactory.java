@@ -29,7 +29,7 @@ public class AbstractFactory {
 }
 
 abstract class SpeciesFactory {
-	public abstract Animal getAnimal(String type);
+	 abstract Animal getAnimal(String type);
 }
 class MammalFactory extends SpeciesFactory {
 

@@ -3,6 +3,28 @@ package com.practice.misc;
 //Rules for inheritance and type Casting in Java.  Here, AA is a superclass.BB and CC both extends AA.  The same type-Casting rules apply if AA is 
 //an interface and BB and CC both implements AA.  The only difference would be that nothing will be inherited from AA.
 
+
+/*
+In summary, type Casting in the sense of Casting between classes only informs the compiler that a certain object should be treated as of a certain
+type.  However, whether that object is indeed of that type depends on runtime type information. 
+*/
+
+
+/*
+A language is statically typed if the type of a variable is known at compile time. 
+This in practice means that you as the programmer must specify what type each variable is. Example: Java, C, C++
+The main advantage here is that all kinds of checking can be done by the compiler, and therefore a lot of stupid bugs are caught at a very early stage.
+
+A language is dynamically typed if the type of a variable is interpreted at runtime. 
+This means that you as a programmer can write a little quicker because you do not have to specify type everytime. 
+Example: Perl. Most scripting languages have this feature as there is no compiler to do static type checking anyway, 
+but you may find yourself searching for a bug that is due to the interpreter misinterpreting the type of a variable. 
+Luckily, scripts tend to be small so bugs have not so many places to hide. 
+Most dynamically typed languages do allow you to provide type information, but do not require it. 
+One language that is currently being developed (Rascal) takes a hybrid approach allowing dynamic typing within functions but enforcing static typing for the function signature.
+*/
+
+
 class AA  // super class
 {
 	void f() { System.out.println("AA.f being called"); }
@@ -36,7 +58,7 @@ public class Casting
 		CC c1 = new CC();
 		a1.g();  b1.g();  c1.h();  
 		//////////////////////////////  nothing interesting so far.
-
+		System.out.println("===================");
 		AA n1 = new BB(); 
 		AA n2 = new CC();
 		AA n3;
@@ -80,17 +102,4 @@ public class Casting
 
 
 
-/*
-   In summary, type Casting in the sense of Casting between classes only informs the compiler that a certain object should be treated as of a certain
-   type.  However, whether that object is indeed of that type depends on runtime type information. 
- */
 
-
-/*
-A language is statically typed if the type of a variable is known at compile time. This in practice means that you as the programmer must specify what type each variable is. Example: Java, C, C++
-The main advantage here is that all kinds of checking can be done by the compiler, and therefore a lot of stupid bugs are caught at a very early stage.
-
-A language is dynamically typed if the type of a variable is interpreted at runtime. This means that you as a programmer can write a little quicker because you do not have to specify type everytime. Example: Perl. Most scripting languages have this feature as there is no compiler to do static typechecking anyway, but you may find yourself searching for a bug that is due to the interpreter misinterpreting the type of a variable. Luckily, scripts tend to be small so bugs have not so many places to hide. Most dynamically typed languages do allow you to provide type information, but do not require it. 
-
-One language that is currently being developed (Rascal) takes a hybrid approach allowing dynamic typing within functions but enforcing static typing for the function signature.
-*/
