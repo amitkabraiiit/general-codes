@@ -14,7 +14,7 @@ public class HeapSort
 		a[i]=a[j]; 
 		a[j]=t; 
 	} 
-	public static void heapSort(int []a){ 	
+	public static void heapSort(int []a){// Overall:O(nlog(n)) (no of time loop run)*(maxheap complexity)
 		n=a.length-1;
 		buildheap(a); 
 		System.out.println(Arrays.toString(a));
@@ -24,12 +24,13 @@ public class HeapSort
 			maxheap(a, 0); 
 		} 
 	} 	
-	public static void buildheap(int []a){ 
-		for(int i=n/2;i>=0;i--){ 
+	public static void buildheap(int []a){  // we are building max heap here. Overall : O(n)
+		for(int i=n/2;i>=0;i--){  
 			maxheap(a,i); 
 		} 
 	} 
-	public static void maxheap(int[] a, int i){  // or heapify function
+	public static void maxheap(int[] a, int i){  // or heapify function. Overall : O(log n)
+		/* sift down */
 		left=2*i; 
 		right=2*i+1; 
 		max = i;
