@@ -14,7 +14,7 @@ public class DaemonThread {
 class WorkerThread extends Thread {
 
     public WorkerThread() {
-      //  setDaemon(true) ;
+        setDaemon(false) ;
         // When true, (i.e. when it's a daemon thread),the Worker thread terminates when the main thread terminates.        
         // When false, (i.e. when it's a user thread),the Worker thread continues to run.
 
@@ -22,10 +22,10 @@ class WorkerThread extends Thread {
 
     public void run() {
         int count=0 ;
-        while (true) {
+        while (count !=5) {
             System.out.println("Hello from Worker "+count++) ;
             try {
-                sleep(5000);
+                sleep(200);
             } catch (InterruptedException e) {}
         }
     }
