@@ -18,7 +18,7 @@ class MainClass {
 	// normal class , top level class , cann't be static/private/protected but can be public/abstract/final.
 	// Default access level here , unless mentioned public it will be seen in the package only ie. default modifier which is equal to package private
 	// Static means once, top level is anyways created once. That is why if we make any inner class as static , it becomes top-level class. 
-	// how to instantial inner classes over here : http://www.geeksforgeeks.org/static-class-in-java/
+	// how to instantiate inner classes over here : http://www.geeksforgeeks.org/static-class-in-java/
 	public int a = 10;
 	static int b = 20;
 
@@ -41,10 +41,7 @@ class MainClass {
 	class C {
 		// inner class , non static nested class.
 		public void testAccessOfOutsideClass(){
-			//Animal a1 = new Animal("monkey");
-			//a1.print();	
-			Base b = new Base();
-			b.method2();
+			System.out.println("This is from non static nested class !!");
 		}
 	} 
 
@@ -52,7 +49,7 @@ class MainClass {
 		class D {
 		} // local inner class , this class can be used inside this function 'f' only and Like local variables.
 		// Local classes aren't allowed to be declared public, protected, private, or static
-		System.out.println("This is from fucntion 'f'");
+		System.out.println("This is from function 'f'");
 
 	}
 
@@ -85,24 +82,30 @@ class MainClass {
 		new Base().method2();
 		
 		// inner class
-		C c1 = new MainClass().new C();
+		C c1 = new MainClass().new C(); // Preferable , easy to remember
 		c1.testAccessOfOutsideClass();
-		MainClass.C c2 = a.new C();
+		C c2 = a.new C();
 		c2.testAccessOfOutsideClass();
 
+		/*
+		 * Inner inner = new MyClass().new Inner(); // non static nested class or inner class
+		 * Inner inner = new MyClass.Inner(); // static nested class its not called inner class since we can use it like outer class as well
+		 */
+		
 		// nested class
 		B b1 = new B();
 		b1.print();
-		MainClass.B b2 = new MainClass.B();
+		B b2 = new MainClass.B();
 		b2.print();
 
 		h();
 	}
-	// This is from fucntion 'f'
+	// This program doesn't run from eclipse since we don't have main in class with name TypesOfClasses but it runs fine from command line
+	// This is from function 'f'
 	// This is from method 2
-	// This is from method 2
-	// This is from method 2
+	// This is from non static nested class !!
+	// This is from non static nested class !!
 	// This is from static nested class function
 	// This is from static nested class function
-	// You hit it!
+	// You hit it in 2!
 }
