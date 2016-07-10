@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ArrayAndArrayListPractice {
 
@@ -15,27 +19,31 @@ public class ArrayAndArrayListPractice {
 
 		// case1
 		List<String> coreModules1 = Arrays.asList("TOOLBAR_TO_DO_LIST", "TOOLBAR_PROPERTY");
-
 		// case2
 		List<String> coreModules2 = new ArrayList<String>(Arrays.asList("TOOLBAR_TO_DO_LIST", "TOOLBAR_PROPERTY"));
 
-		// case3
-		String[] array1 = {"TOOLBAR_TO_DO_LIST", "TOOLBAR_PROPERTY"};
-		List<String> coreModules3 = new ArrayList<String>();
-		Collections.addAll(coreModules3, array1);
-		
+		// case 3
+		String [] a = new String[] {"amit","kabra"};
+		// converting array to list is same as creating new list out of this array
+		List<String> list = Arrays.asList(a);
+
 		// case4
+		String[] array1 = {"TOOLBAR_TO_DO_LIST", "TOOLBAR_PROPERTY"};
+		List<String> coreModules3 = new ArrayList<>();
+		Collections.addAll(coreModules3, array1);
+		// case5
 		String[] array2 = {"TOOLBAR_TO_DO_LIST", "TOOLBAR_PROPERTY"};
-		ArrayList coreModules4 = new ArrayList();
+		ArrayList<String> coreModules4 = new ArrayList<>();
 		coreModules4.addAll(Arrays.asList(array2));
 
 	}
 
 	public void convertListToArray(){
-		ArrayList assetTradingList = new ArrayList();                       
+		ArrayList<String> assetTradingList = new ArrayList<>();                       
 		assetTradingList.add("Stocks trading");
 		assetTradingList.add("electronic trading");
 		String [] assetTradingArray = new String[assetTradingList.size()];
+		// converting list to array is actually creating new array out of list
 		assetTradingList.toArray(assetTradingArray);
 		System.out.println("Coverting list to array: "+Arrays.toString(assetTradingArray));
 	}
@@ -64,32 +72,37 @@ public class ArrayAndArrayListPractice {
 		}
 
 	}
-	
+
+	public static void toArrayFunction() {
+		Map<Integer,Integer> m = new HashMap<>();
+		m.put(1, 1);
+		Set<Integer> s = new HashSet<>();
+		s.add(1);
+		List<Integer> l = new ArrayList<>();
+		l.add(1);
+		System.out.println(Arrays.toString(m.entrySet().toArray()));// m.entrySet() returns the set
+		System.out.println(Arrays.toString(s.toArray()));
+		System.out.println(Arrays.toString(l.toArray()));
+	}
+
 	private void printArray(){
 		String [] sa = {"one", "two", "three", "four"};
+		//	String [] sa = new String[]{"one", "two", "three", "four"}; // works too
+
 		System.out.println("Printing Array1: "+Arrays.toString(sa));
-		System.out.println("Printing Array2: "+Arrays.deepToString(sa));
-		System.out.println("Printing Array3: "+Arrays.asList(sa));
+		System.out.println("Printing Array1: "+Arrays.asList(sa));
+		System.out.println("Printing Array1: "+Arrays.deepToString(sa));
+		String [][] sb = {{"one", "two"},{ "three", "four"}};
+		// String [][] sb = {sa,sa}; // works too
+		System.out.println("Printing Array1: "+Arrays.toString(sb));
+		System.out.println("Printing Array1: "+Arrays.asList(sb));
+		System.out.println("Printing Array1: "+Arrays.deepToString(sb));
+		System.out.println("Printing Array1: "+sb[1][0]);
+
+
 
 	}
-	
-	private void print2DArray(){
-		String[] arr1 = new String[] { "Fifth", "Sixth" };
-		String[] arr2 = new String[] { "Seventh", "Eight" };
-		// An array of array containing String objects
-		String[][] arrayOfArray = new String[][] { arr1, arr2 };
-		 		 
-		// Print the array using default toString method
-		System.out.println(arrayOfArray); // [[Ljava.lang.String;@1ad086a 
-	
-		// Print the array using Arrays.toString()
-		System.out.println(Arrays.toString(arrayOfArray)); // [[Ljava.lang.String;@10385c1, [Ljava.lang.String;@42719c]
-	 
-		// Print the array using Arrays.deepToString()
-		System.out.println(Arrays.deepToString(arrayOfArray)); // [[Fifth, Sixth], [Seventh, Eighth]]
 
-	}
-	
 	public static void main(String[] args) {
 
 		ArrayAndArrayListPractice test = new ArrayAndArrayListPractice();
@@ -97,6 +110,6 @@ public class ArrayAndArrayListPractice {
 		//test.convertArrayToList();		
 		test.convertListToArray();
 		//test.arraySort();
-		
+
 	}
 }
