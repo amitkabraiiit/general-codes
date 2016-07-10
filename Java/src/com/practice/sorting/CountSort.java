@@ -3,7 +3,8 @@ package com.practice.sorting;
 import java.util.Arrays;
 
 public class CountSort { 
-    void count_sort(int a[],int b[],int k){
+    void count_sort(int a[],int b[],int k){ // O(n+d) , stable sort , extra space O(K)
+
     	// input array : [1,4,3,1,2,3,0,3]
     	
         // c[i] are all zeros.
