@@ -1,79 +1,75 @@
 package com.practice.designpattern.behavioral;
 
-
-interface IMediator {
-	public void fight();
-	public void talk();
-	public void registerA(ColleagueA a);
-	public void registerB(ColleagueB a);
-}
-
-//concrete mediator
-class ConcreteMediator implements IMediator{
-
-	ColleagueA talk;
-	ColleagueB fight;
-
-	public void registerA(ColleagueA a){
-		talk = a;
-	}
-
-	public void registerB(ColleagueB b){
-		fight = b;
-	}
-
-	public void fight(){
-		System.out.println("Mediator is fighting");
-		//let the fight colleague do some stuff
-	}
-
-	public void talk(){
-		System.out.println("Mediator is talking");
-		//let the talk colleague do some stuff
-	}
-}
-
-abstract class Colleague {
-	IMediator mediator;
-	public abstract void doSomething();
-}
-
-//concrete colleague
-class ColleagueA extends Colleague {
-
-	public ColleagueA(IMediator mediator) {
-		this.mediator = mediator;
-	}
-
-	@Override
-	public void doSomething() {
-		this.mediator.talk();
-		this.mediator.registerA(this);
-	}
-}
-
-//concrete colleague
-class ColleagueB extends Colleague {
-	public ColleagueB(IMediator mediator) {
-		this.mediator = mediator;
-		this.mediator.registerB(this);
-	}
-
-	@Override
-	public void doSomething() {
-		this.mediator.fight();
-	}
-}
+import java.util.ArrayList;
 
 public class MediatorDemo {
-
 	public static void main(String[] args) {
-		IMediator mediator = new ConcreteMediator();
-
-		ColleagueA talkColleague = new ColleagueA(mediator);
-		ColleagueB fightColleague = new ColleagueB(mediator);
-
-		talkColleague.doSomething();
-		fightColleague.doSomething();
+		ApplicationMediator mediator = new ApplicationMediator();
+		ConcreteColleague desktop = new ConcreteColleague(mediator);
+		MobileColleague mobile = new MobileColleague(mediator);
+		mediator.addColleague(desktop);
+		mediator.addColleague(mobile);
+		desktop.send("Hello World");
+		mobile.send("Hello");
 	}
 }
+
+interface Mediator {
+	public void send(String message, Colleaggue colleague);
+}
+
+
+
+class ApplicationMediator implements Mediator {
+	private ArrayList<Colleaggue> colleagues;
+	public ApplicationMediator() {
+		colleagues = new ArrayList<Colleaggue>();
+	}
+	public void addColleague(Colleaggue colleague) {
+		colleagues.add(colleague);
+	}
+	public void send(String message, Colleaggue originator) {
+		//let all other screens know that this screen has changed
+		for(Colleaggue colleague: colleagues) {
+			//don't tell ourselves
+			if(colleague != originator) {
+				colleague.receive(message);
+			}
+		}
+	}
+}
+
+abstract class Colleaggue{
+	private Mediator mediator;
+	public Colleaggue(Mediator m) {
+		mediator = m;
+	}
+	//send a message via the mediator
+	public void send(String message) {
+		mediator.send(message, this);
+	}
+	//get access to the mediator
+	public Mediator getMediator() {return mediator;}
+	public abstract void receive(String message);
+}
+
+class ConcreteColleague extends Colleaggue {
+	public ConcreteColleague(Mediator m) {
+		super(m);
+	}
+
+	public void receive(String message) {
+		System.out.println("Colleague Received: " + message);
+	}
+}
+
+class MobileColleague extends Colleaggue {
+	public MobileColleague(Mediator m) {
+		super(m);
+	}
+
+	public void receive(String message) {
+		System.out.println("Mobile Received: " + message);
+	}
+}
+
