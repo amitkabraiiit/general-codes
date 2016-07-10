@@ -21,7 +21,8 @@ Example: Perl. Most scripting languages have this feature as there is no compile
 but you may find yourself searching for a bug that is due to the interpreter misinterpreting the type of a variable. 
 Luckily, scripts tend to be small so bugs have not so many places to hide. 
 Most dynamically typed languages do allow you to provide type information, but do not require it. 
-One language that is currently being developed (Rascal) takes a hybrid approach allowing dynamic typing within functions but enforcing static typing for the function signature.
+One language that is currently being developed (Rascal) takes a hybrid approach allowing dynamic typing within functions but enforcing static 
+typing for the function signature.
 */
 
 
@@ -59,27 +60,24 @@ public class Casting
 		a1.g();  b1.g();  c1.h();  
 		//////////////////////////////  nothing interesting so far.
 		System.out.println("===================");
-		AA n1 = new BB(); 
-		AA n2 = new CC();
+		AA aa1 = new BB(); 
+		AA aa2 = new CC();
 		AA n3;
-		n1.g(); 
-		// In Java, a variable declared type of class A can hold a reference to an object of class A or an object belonging to any subclasses of class A.
-		// In later case it can access only members of subclass which are there in class A unless type-casted. 
-		// n2.h();   // compiler error because n2 has static type AA (no h)
-		((CC)n2).h();  // now OK
+		aa1.g(); 
+		((CC)aa2).h();  // now OK
 
-		// ((CC)n1).h();  // runtime error, because n1 has dynamic type BB
-		// ((CC)b1).h();  // compiler error: can't type cast across, only up/down
+		// ((CC)aa1).h();  // siblings can't be typecasted to each other , runtime error, because aa1 has dynamic type BB
+		// ((CC)b1).h();  // siblings can't be typecasted to each other , compiler error: can't type cast across, only up/down
 		a1 = b1;     // ok: no type Casting needed is BB extends/implements AA
 		//b1 = (BB)a1;  // compiles but produces runtime error, since a1 is an AA object, not a BB object.
 
-		Object[] M = new Object[10]; // Object is the superclass of all classes
-		M[0] = "abc";                // a String is an Object
+		Object[] M = new Object[10]; 
+		M[0] = "abc";                
 		M[1] = 3.14;  // automatically converts to Double, which is an Object
 
-		// System.out.println(M[0].length()); // compiler error, why?
+		// System.out.println(M[0].length()); // compiler error, The method length() is undefined for the type Object
 		System.out.println(((String)M[0]).length()); // ok now
-		//System.out.println(((String)M[1]).length()); // runtime error, why?
+		//System.out.println(((String)M[1]).length()); // runtime error, java.lang.Double cannot be cast to java.lang.String
 
 		// now for a semi-tricky question:
 		((AA)b1).g(); // which f will g call?  (run to find out, then explain)
