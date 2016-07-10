@@ -1,69 +1,92 @@
 package com.practice.ds;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
+// Bounded Queue, queue with array looks tough since when we deque , we need to reduce array size.
+// ToDo
+
+class QueueWithArray<T> {
+	private int front;
+	private int rear;
+	int size;
+	T[] queue;
+	public QueueWithArray(int inSize) {
+		size = inSize;
+		queue = (T[]) new Object[size];
+		front = -1;
+		rear = -1;
+	}
+
+	public boolean isempty() {
+		return (front == -1 && rear == -1);
+	}
+
+	public void enQueue(T value) {
+		if (isempty()) {
+			front++;
+			rear++;
+			queue[rear] = value;
+			System.out.println("Enqueued "+value);
+			return;
+		} 
+		if ((rear+1)%size==front) {
+			System.out.println("Queue is full");
+
+		} else {
+			rear=(rear+1)%size;
+			queue[rear] = value;
+			System.out.println("Enqueued "+value);
+
+		}
+	}
+
+	public T deQueue() {
+		T value = null;
+		if (isempty()) {
+			throw new IllegalStateException("Queue is empty, cant dequeue");
+		} else if (front == rear) {
+			value = queue[front];
+			front = -1;
+			rear = -1;
+
+		} else {
+			value = queue[front];
+			front=(front+1)%size;
+
+		}
+		return value;
+
+	}
+
+	@Override
+	public String toString() {
+		return "Queue [front=" + front + ", rear=" + rear + ", size=" + size
+				+ ", queue=" + Arrays.toString(queue) + "]";
+	}
+
+}
 
 
 public class Queue{
 
-	// Bounded Queue, queue with array looks tough since when we deque , we need to reduce array size.
-	// ToDo
-	static class QueueWithArray {
-		private int maxSize;
-		private Object[] QueueArray;
-		private int first, last;
 
-		public QueueWithArray(int s) {
-			maxSize = s;
-			QueueArray = new Object[maxSize];
-			first = 0 ; last = -1 ;
-		}
-		public void enqueue(Object item) {
-			if(last < maxSize -1){
-				QueueArray[++last] = item;
-			}else{
-				System.out.println("Stack overflow");
-			}
-		}
-		public Object dequeue() {
-			if(isEmpty())throw new NoSuchElementException("Queue underflow");
-			return QueueArray[first];
-		}
-		public Object peek() {
-			return QueueArray[first];
-		}
-		public boolean isEmpty() {
-			return (last == -1);
-		}
-		public boolean isFull() {
-			return (last == maxSize - 1);
-		}
-		public int size() {
-			return last +1;
-		}
-	    public String toString() {
-	        StringBuilder s = new StringBuilder();
-	        for (int i =0 ; i<=last; i++)
-	            s.append(QueueArray[i] + " ");
-	        return s.toString();
-	    } 
-	}
-	
+
 	/*
 	 * In this queue implementation, we maintain first pointer , last pointer and count variable.
 	 */
-	
+
 	static class QueueWithLinkedList {
-		
+
 		private class Node {
 			public Object data;
 			public Node next;
 		}	
-		
+
 		private Node first;
 		private Node last;
 		private int N;	
-		
+
 		public QueueWithLinkedList(){
 			first = null;
 			last = null;
@@ -100,30 +123,33 @@ public class Queue{
 		public int size() {
 			return N;
 		}
-	    public String toString() {
-	        StringBuilder s = new StringBuilder();
-	        for (Node n = first; n != null; n = n.next)
-	            s.append(n.data + " ");
-	        return s.toString();
-	    }
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			for (Node n = first; n != null; n = n.next)
+				s.append(n.data + " ");
+			return s.toString();
+		}
 	}
 	public static void main(String[] args) {
-		QueueWithArray arrayQueue = new QueueWithArray(10); 
-		arrayQueue.enqueue(new Integer(10));
-		arrayQueue.enqueue(new Integer(20));
-		arrayQueue.enqueue(new Integer(30));
-		arrayQueue.enqueue(new Integer(40));
-		arrayQueue.enqueue(new Integer(50));
+		QueueWithArray<Integer> arrayQueue = new QueueWithArray<Integer>(4); 
+		arrayQueue.enQueue(new Integer(10));
+		arrayQueue.enQueue(new Integer(20));
+		arrayQueue.enQueue(new Integer(30));
+		arrayQueue.enQueue(new Integer(40));
+		arrayQueue.enQueue(new Integer(50));
 		System.out.println("QueueWithArray : "+ arrayQueue.toString());
-		
-		while (!arrayQueue.isEmpty()) {
-			Integer value = (Integer)arrayQueue.dequeue();
-			System.out.print(value);
-			System.out.print(" ");
-		}
-		System.out.println("");
-		
-		QueueWithLinkedList linkedQueue = new QueueWithLinkedList(); 
+		Integer value = (Integer)arrayQueue.deQueue();
+		System.out.println("Dequeued "+value);
+		value = (Integer)arrayQueue.deQueue();
+		System.out.println("Dequeued "+value);
+		System.out.println("QueueWithArray : "+ arrayQueue.toString());
+		arrayQueue.enQueue(new Integer(50));
+		arrayQueue.enQueue(new Integer(60));
+		System.out.println("QueueWithArray : "+ arrayQueue.toString());
+		arrayQueue.enQueue(new Integer(70));
+		System.out.println("QueueWithArray : "+ arrayQueue.toString());
+
+		/*		QueueWithLinkedList linkedQueue = new QueueWithLinkedList(); 
 		linkedQueue.enqueue(new Integer(10));
 		linkedQueue.enqueue(new Integer(20));
 		linkedQueue.enqueue(new Integer(30));
@@ -135,8 +161,8 @@ public class Queue{
 			System.out.print(value);
 			System.out.print(" ");
 		}
-		System.out.println("");
+		System.out.println("");*/
 
-		
+
 	}
 }
