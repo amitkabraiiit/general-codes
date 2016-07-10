@@ -1,10 +1,8 @@
 package com.practice.ds;
 
-import com.practice.ds.BST.Node;
-
 public class LinkedList {
 
-	static class Node {
+	public class Node {
 		public Node next;
 		Object data;
 		// Node constructor
@@ -114,7 +112,7 @@ public class LinkedList {
 		return true;
 	}
 
-	public static Node reverseLL2(Node currentHead)
+	public static Node reverseLL(Node currentHead)
 	{
 		// Basically we are iterating on old list and adding their node to the front of newList one by one
 		if (currentHead == null) return null;
@@ -163,7 +161,7 @@ public class LinkedList {
 				//  Unlink the endNode
 				endNode.next = null;
 				// Reverse the list starting from startNode
-				newStartNode = reverseLL2(startNode); // though the list reverses, start and end points to the
+				newStartNode = reverseLL(startNode); // though the list reverses, start and end points to the
 				// same elements as they were pointing to earlier.
 			}
 			else
@@ -378,7 +376,7 @@ public class LinkedList {
 		//lList.reverseLLUsingRecursion(lList.head);
 		Node temp = lList.head;
 		//reverseLLUsingRecursion2(temp);
-		//Node t = reverseLL2(temp);
+		//Node t = reverseLL(temp);
 		//Node t = reverseKNodes(temp, 3);		
 		//printList(t);
 
