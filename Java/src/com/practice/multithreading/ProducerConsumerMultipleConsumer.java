@@ -18,7 +18,6 @@ public class ProducerConsumerMultipleConsumer {
         }
         public void run() {
             try {
-
                 while (true) {
                     sem.acquire(1);
                     mutex.acquire();
@@ -34,9 +33,7 @@ public class ProducerConsumerMultipleConsumer {
     static class Producer extends Thread {
         public void run() {
             try {
-
                 int N = 0;
-
                 while (true) {
                     mutex.acquire();
                     list.add(new Integer(N++));
