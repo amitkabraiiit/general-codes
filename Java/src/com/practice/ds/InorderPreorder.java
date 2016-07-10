@@ -2,8 +2,6 @@ package com.practice.ds;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.practice.ds.BST.Node;
  
 public class InorderPreorder
 {
@@ -19,6 +17,18 @@ public class InorderPreorder
  
     public Node constructBinaryTreePreIn(List<Integer> preOrder, List<Integer> inOrder)
     {
+    	/*
+        Inorder  : 8,4,10,9,11,2,5,1,6,3,7
+        Preorder : 1,2,4,8,9,10,11,5,3,6,7
+        
+        Constructs following tree
+                        1
+                 2             3
+            4        5      6     7
+         8     9
+            10   11
+         */   
+    	
         Node node = null;
         List<Integer> leftPreOrder;
         List<Integer> rightPreOrder;
@@ -56,6 +66,18 @@ public class InorderPreorder
         int inorderPos;
         int postorderPos;
  
+    	/*
+        Inorder  : 8,4,10,9,11,2,5,1,6,3,7
+        Postorder: 8,10,11,9,4,5,2,6,7,3,1
+        
+        Constructs following tree
+                        1
+                 2             3
+            4        5      6     7
+         8     9
+            10   11
+         */   
+        
         if ((postOrder.size() != 0) && (inOrder.size() != 0))
         {
             //  Assign the first element of postorder traversal as root
@@ -83,14 +105,21 @@ public class InorderPreorder
         List<Integer> rightPostOrder;
         int postorderPos=0;
  
+    	/*
+        Postorder: 10,32, 25, 78,40
+        
+        Constructs following tree
+                        40
+                 25            78
+            10        32
+         */  
+        
         if ((postOrder.size() != 0))
         {
             //  Assign the first element of postorder traversal as root
             node = new Node();
             node.data = ((Integer) postOrder.get(postOrder.size()-1)).intValue();
-            while(postOrder.get(postorderPos)<node.data){
-            	postorderPos++;
-            }
+            while( postOrder.get(postorderPos) < node.data ) postorderPos++;
             leftPostOrder = postOrder.subList(0, postorderPos );
             rightPostOrder = postOrder.subList(postorderPos, postOrder.size()-1);
  
@@ -108,6 +137,14 @@ public class InorderPreorder
         List<Integer> rightPreOrder = null;
         int preorderPos=1;
  
+    	/*
+        Preorder: 40,25, 10,32,78
+        Constructs following tree
+                        40
+                 25            78
+            10        32
+         */  
+        
         if ((preOrder.size() != 0))
         {
             //  Assign the first element of preorder traversal as root
