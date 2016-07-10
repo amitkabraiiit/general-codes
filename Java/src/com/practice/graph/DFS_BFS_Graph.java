@@ -1,165 +1,119 @@
 package com.practice.graph;
 
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 
-public class DFS_BFS_Graph
+
+//Java program to print BFS traversal from a given source vertex.
+//BFS(int s) traverses vertices reachable from s.
+import java.io.*;
+import java.util.*;
+
+//This class represents a directed DFS_BFS_Graph using adjacency list
+//representation
+class DFS_BFS_Graph
 {
+	private int V;   // No. of vertices
+	private LinkedList<Integer> adj[]; //Adjacency Lists
 
-	public static void main(String[] args)
+	// Constructor
+	DFS_BFS_Graph(int v)
 	{
-		new DFS_BFS_Graph(); // I like doing things this way so I don't have to use static objects
+		V = v;
+		adj = new LinkedList[v];
+		for (int i=0; i<v; ++i)
+			adj[i] = new LinkedList();
 	}
 
-	int N; // number of vertices in the graph
-	boolean[][] G; // the graph as an adjacency matrix
-	// G[i][j] is true if there is an edge from i to j
-
-
-	DFS_BFS_Graph()
+	// Function to add an edge into the DFS_BFS_Graph
+	void addEdge(int v,int w)
 	{
-		setupGraph();
-
-		System.out.println("------------------------------");
-		System.out.println();
-
-		// perform a DFS on the graph
-		DFS();
-
-		System.out.println();
-		System.out.println("------------------------------");
-		System.out.println();
-
-
-		// perform a BFS on the graph
-		BFS();
-
-		System.out.println();
-		System.out.println("------------------------------");
-		System.out.println();
-		System.out.println("All done - have a good day!");
+		adj[v].add(w);
 	}
 
-	// initial setup of the graph
-	void setupGraph()
+	// prints BFS traversal from a given source s
+	void BFS(int s)
 	{
-		// set up a graph with 8 vertices that looks like:
-		/*
-			0 --- 1        5---6
-			| \    \       |  /
-			|  \    \      | /
-			2   3----4     7
+		// Mark all the vertices as not visited(By default
+		// set as false)
+		boolean visited[] = new boolean[V];
 
-			Notice this graph has 2 components
-		 */
+		// Create a queue for BFS
+		LinkedList<Integer> queue = new LinkedList<Integer>();
 
-		N=8;
-		G=new boolean[N][N];
+		// Mark the current node as visited and enqueue it
+		visited[s]=true;
+		queue.add(s);
 
-		G[0][1]=G[1][0]=true; // notice that for each edge G[i][j] == G[j][i]
-		G[0][2]=G[2][0]=true;	// this means that the graph is undirected
-		G[0][3]=G[3][0]=true;
-		G[1][4]=G[4][1]=true;
-		G[3][4]=G[4][3]=true;
-		G[5][6]=G[6][5]=true;
-		G[5][7]=G[7][5]=true;
-		G[6][7]=G[7][6]=true;
-	}
-
-	// perform a DFS on the graph G
-	// Go through this example here first : http://amritdsnotes.blogspot.in/2010/09/graph-traversal-depth-first-search.html
-	void DFS()
-	{
-		boolean[] V=new boolean[N]; // a visited array to mark which vertices have been visited while doing the DFS
-
-		int numComponets=0; // the number of components in the graph
-
-		// do the DFS from each node not already visited
-		for (int i=0; i<N; ++i)
-			if (!V[i])
-			{
-				++numComponets;
-				System.out.printf("Starting a DFS for component %d starting at node %d%n",numComponets,i);
-
-				DFS(i,V);
-			}
-
-		System.out.println();
-		System.out.printf("Finished with DFS - found %d components.%n", numComponets);
-	}
-
-	public void DFS(int start, boolean[] V)
-	{
-		//DFS uses Stack data structure
-		Stack<Integer> S =new Stack<Integer>(); // A queue to process nodes
-		S.push(start);
-
-		V[start]=true;
-		while(!S.isEmpty())
-		{	
-			int n= S.pop();
-			System.out.println("Going to node "+n);
-			for(int i=0;i<N; ++i){
-				if (G[n][i] && !V[i])
-				{
-					S.push(i);
-					V[i] = true;
-				}
-			}
-		}
-	}
-
-	// perform a BFS on the graph G 
-	void BFS()
-	{
-		boolean[] V=new boolean[N]; // a visited array to mark which vertices have been visited while doing the BFS
-
-		int numComponets=0; // the number of components in the graph
-
-		// do the BFS from each node not already visited
-		for (int i=0; i<N; ++i)
-			if (!V[i])
-			{
-				++numComponets;
-				System.out.printf("Starting a BFS for component %d starting at node %d%n",numComponets,i);
-
-				BFS(i,V);
-			}
-
-		System.out.println();
-		System.out.printf("Finished with BFS - found %d components.%n", numComponets);
-	}
-
-	// perform a BFS starting at node start
-	void BFS(int start, boolean[] V)
-	{
-		Queue<Integer> Q=new LinkedList<Integer>(); // A queue to process nodes
-
-		// start with only the start node in the queue and mark it as visited
-		Q.offer(start);
-		V[start]=true;
-
-		// continue searching the graph while still nodes in the queue
-		while (!Q.isEmpty())
+		while (queue.size() != 0)
 		{
-			int at=Q.poll(); // get the head of the queue
-			System.out.printf("At node %d in the BFS%n",at);
+			// Dequeue a vertex from queue and print it
+			s = queue.poll();
+			System.out.print(s+" ");
 
-			// add any unseen nodes to the queue to process, then mark them as visited so they don't get re-added
-			for (int i=0; i<N; ++i)
-				if (G[at][i] && !V[i])
+			// Get all adjacent vertices of the dequeued vertex s
+			// If a adjacent has not been visited, then mark it
+			// visited and enqueue it
+			Iterator<Integer> i = adj[s].listIterator();
+			while (i.hasNext())
+			{
+				int n = i.next();
+				if (!visited[n])
 				{
-					Q.offer(i);
-					V[i]=true;
-
-					System.out.printf("Adding node %d to the queue in the BFS%n", i);
+					visited[n] = true;
+					queue.add(n);
 				}
-
-			System.out.printf("Done processing node %d%n", at);
+			}
 		}
-
-		System.out.printf("Finished with the BFS from start node %d%n", start);
 	}
+	
+	
+	 // A function used by DFS
+    void DFSUtil(int v,boolean visited[])
+    {
+        // Mark the current node as visited and print it
+        visited[v] = true;
+        System.out.print(v+" ");
+ 
+        // Recur for all the vertices adjacent to this vertex
+        Iterator<Integer> i = adj[v].listIterator();
+        while (i.hasNext())
+        {
+            int n = i.next();
+            if (!visited[n])
+                DFSUtil(n, visited);
+        }
+    }
+ 
+    // The function to do DFS traversal. It uses recursive DFSUtil()
+    void DFS(int v)
+    {
+        // Mark all the vertices as not visited(set as
+        // false by default in java)
+        boolean visited[] = new boolean[V];
+ 
+        // Call the recursive helper function to print DFS traversal
+        DFSUtil(v, visited);
+    }
+    
 
+	// Driver method to
+	public static void main(String args[])
+	{
+		DFS_BFS_Graph g = new DFS_BFS_Graph(4);
+
+		g.addEdge(0, 1);
+		g.addEdge(0, 2);
+		g.addEdge(1, 2);
+		g.addEdge(2, 0);
+		g.addEdge(2, 3);
+		g.addEdge(3, 3);
+
+		System.out.println("Following is Breadth First Traversal "+
+				"(starting from vertex 2)");
+
+		g.BFS(2);
+		System.out.println();
+		g.DFS(2);
+	}
 }
+//This code is contributed by Aakash Hasija
