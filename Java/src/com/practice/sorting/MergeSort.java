@@ -16,12 +16,14 @@ public class MergeSort {
 	 * Recursively divide until each subarray has only one element.
 	 * Merge the sorted subarrays.
 	 * 
-	 * The merge sort approach recursively divides the array in half, and this generates totally log(n) levels of divisions, 
-	 * and in consequence, log(n) levels of merging. For each level, merging runs in linear time. 
-	 * The total running time is about O(n * log(n)). This is much more efficient than selection/insertion/bubble sorts which run in O(n^2) time.
+	 * The merge sort approach recursively divides the array in half, and this generates totally log(n) 
+	 * levels of divisions, and in consequence, log(n) levels of merging. For each level, merging runs 
+	 * in linear time. The total running time is about O(n * log(n)). \
+	 * This is much more efficient than selection/insertion/bubble sorts which run in O(n^2) time.
 	 * 
 	 * Merge sort requires additional scratch space proportional to the size of the input array. 
-	 * Merge sort is relatively simple to code and offers performance typically only slightly below that of quicksort.
+	 * Merge sort is relatively simple to code and offers performance typically only slightly 
+	 * below that of quicksort.
 	 */
 	
 	public void doMergeSort(int first, int last){
