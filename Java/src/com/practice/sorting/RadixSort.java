@@ -5,8 +5,8 @@ import java.util.Random;
 public class RadixSort {
  
 	/*
-	 * The idea of Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit. 
-	 * Radix sort uses counting sort as a subroutine to sort.
+	 * The idea of Radix Sort is to do digit by digit sort starting from least significant digit to 
+	 * most significant digit.Radix sort uses counting sort as a subroutine to sort.
 	 */
 	
     // Main function to test performance sorting 1 million integers.
@@ -40,7 +40,6 @@ public class RadixSort {
             // Use counting sort at each digit's place
             input = countingSortForNthPlace(input, place);
         }
- 
         return input;
     }
  
