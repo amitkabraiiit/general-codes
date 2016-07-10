@@ -1,90 +1,79 @@
 package com.practice.designpattern.behavioral;
 
-interface IATCMediator {
-	public void registerRunway(Runway runway);
-	public void registerFlight(Flight flight);
-	public boolean isLandingOk();
-	public void setLandingStatus(boolean status);
-}	
 
-class ATCMediator implements IATCMediator {
-	private Flight flight;
-	private Runway runway;
-	public boolean land;
+interface IMediator {
+	public void fight();
+	public void talk();
+	public void registerA(ColleagueA a);
+	public void registerB(ColleagueB a);
+}
 
-	@Override
-	public void registerRunway(Runway runway) {
-		this.runway = runway;
-	}
-	@Override
-	public void registerFlight(Flight flight) {
-		this.flight = flight;
-	}
-	@Override
-	public boolean isLandingOk() {
-		return land;
+//concrete mediator
+class ConcreteMediator implements IMediator{
+
+	ColleagueA talk;
+	ColleagueB fight;
+
+	public void registerA(ColleagueA a){
+		talk = a;
 	}
 
-	@Override
-	public void setLandingStatus(boolean status) {
-		land = status;
+	public void registerB(ColleagueB b){
+		fight = b;
+	}
+
+	public void fight(){
+		System.out.println("Mediator is fighting");
+		//let the fight colleague do some stuff
+	}
+
+	public void talk(){
+		System.out.println("Mediator is talking");
+		//let the talk colleague do some stuff
 	}
 }
 
-
-interface IATCCommand {
-	void land();
+abstract class Colleague {
+	IMediator mediator;
+	public abstract void doSomething();
 }
 
-class Flight implements IATCCommand {
-	private IATCMediator atcMediator;
+//concrete colleague
+class ColleagueA extends Colleague {
 
-	public Flight(IATCMediator atcMediator) {
-		this.atcMediator = atcMediator;
-	}
-
-	public void land() {
-		if (atcMediator.isLandingOk()) {
-			System.out.println("Landing done....");
-			atcMediator.setLandingStatus(true);
-		} else
-			System.out.println("Will wait to land....");
-	}
-
-	public void getReady() {
-		System.out.println("Getting ready...");
-	}
-}
-
-
-
-class Runway implements IATCCommand {
-	private IATCMediator atcMediator;
-
-	public Runway(IATCMediator atcMediator) {
-		this.atcMediator = atcMediator;
-		atcMediator.setLandingStatus(true);
+	public ColleagueA(IMediator mediator) {
+		this.mediator = mediator;
 	}
 
 	@Override
-	public void land() {
-		System.out.println("Landing permission granted...");
-		atcMediator.setLandingStatus(true);
-	}
-
-}
-
-class MediatorDemo2{
-	public static void main(String args[]) {
-
-		IATCMediator atcMediator = new ATCMediator();
-		Flight sparrow101 = new Flight(atcMediator);
-		Runway mainRunway = new Runway(atcMediator);
-		atcMediator.registerFlight(sparrow101);
-		atcMediator.registerRunway(mainRunway);
-		sparrow101.getReady();
-		mainRunway.land();
-		sparrow101.land();
+	public void doSomething() {
+		this.mediator.talk();
+		this.mediator.registerA(this);
 	}
 }
 
+//concrete colleague
+class ColleagueB extends Colleague {
+	public ColleagueB(IMediator mediator) {
+		this.mediator = mediator;
+		this.mediator.registerB(this);
+	}
+
+	@Override
+	public void doSomething() {
+		this.mediator.fight();
+	}
+}
+
+public class MediatorDemo2 {
+
+	public static void main(String[] args) {
+		IMediator mediator = new ConcreteMediator();
+
+		ColleagueA talkColleague = new ColleagueA(mediator);
+		ColleagueB fightColleague = new ColleagueB(mediator);
+
+		talkColleague.doSomething();
+		fightColleague.doSomething();
+	}
+}
