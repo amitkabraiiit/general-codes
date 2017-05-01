@@ -98,6 +98,43 @@ public class InorderPreorder
         return node;
     }
     
+    
+    Node constructBinaryTreeLevelIn(Node node, int[] levelOrder, int[] inOrder, int inStart, int inEnd) 
+    {
+        // if start index is more than end index
+        if (inStart > inEnd) return null;
+        if (inStart == inEnd){
+        	Node n = new Node();
+        	n.data = inOrder[inStart];
+        	return n;
+        }
+        boolean found = false;
+        int index = 0;
+  
+        // it represents the index in inOrder array of element that
+        // appear first in levelOrder array.
+        for (int i = 0; i < levelOrder.length - 1; i++) {
+            int data = levelOrder[i];
+            for (int j = inStart; j < inEnd; j++) {
+                if (data == inOrder[j]){
+                    node = new Node();
+                    node.data = data;
+                    index = j;
+                    found = true;
+                    break;
+                }
+            }
+            if (found == true)  break;
+        }
+  
+        //elements present before index are part of left child of node.
+        //elements present after index are part of right child of node.
+        node.left = constructBinaryTreeLevelIn(node, levelOrder, inOrder, inStart, index - 1);
+        node.right = constructBinaryTreeLevelIn(node, levelOrder, inOrder,index + 1, inEnd);
+  
+        return node;
+    }
+    
     public Node constructBinaryTreePost(List<Integer> postOrder)
     {
         Node node = null;

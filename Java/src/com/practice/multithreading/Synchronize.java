@@ -3,7 +3,7 @@ package com.practice.multithreading;
 public class Synchronize {
 
 	public  synchronized void test1() throws InterruptedException{
-		System.out.println("Inside test1");
+		System.out.println("Inside test1, now I will wait for 5 sec and still Test2 thread won't be able to run since I hold the monitor here ..:)");
 		Thread.sleep(5000);
 	}
 	public  synchronized void test2(){
