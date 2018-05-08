@@ -8,7 +8,7 @@ public class CallHandler2 {
 	List<List<Calll>> callQueues;
 	List<Respondentt> r = new ArrayList<Respondentt>();
 	Managerr m1 = new Managerr("Manager1");
-	Managerr m2 = new Managerr("Manager1");
+	Managerr m2 = new Managerr("Manager2");
 	Directorr d = new Directorr("Director");
 	private int numEmployees = 5;
 	public void prepareEmployees(){

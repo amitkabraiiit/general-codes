@@ -26,7 +26,7 @@ enum Lamp {
 	 * */ 
 	//Express12A line lamp 
 
-	S2N("N2S","S2W",false),
+	/*	S2N("N2S","S2W",false),
 	S2W("N2E","E2W",false),
 	E2W("W2E","E2S",false),
 	E2S("W2N","S2N",false), 
@@ -37,17 +37,33 @@ enum Lamp {
 	S2E(null,null,true),
 	E2N(null,null,true),
 	N2W(null,null,true),
-	W2S(null,null,true); 
+	W2S(null,null,true); */
+
+	S2N("E2N", "W", "N2S",false),
+	N2S("W2S", "E", "W2E",false),
+	W2E("S2E", "N", "E2W",false),
+	E2W("N2W", "S", "S2N",false),
+	E2N(null,null,null,false),
+	W2S(null,null,null,false),
+	S2E(null,null,null,false),
+	N2W(null,null,null,false),
+	N(null,null,null,false),
+	S(null,null,null,false),
+	E(null,null,null,false),
+	W(null,null,null,false);
 
 	//The corresponding direction lamp 
 	private String oppsite; 
+	//The corresponding padestrian 
+	private String padestrian; 
 	//The lamp to light the next 
 	private String next; 
 	//The current state, trueExpressed as green 
 	private boolean light; 
 
-	Lamp(String oppsite,String next,boolean light){ 
+	Lamp(String oppsite,String padestrian,String next,boolean light){ 
 		this.oppsite = oppsite; 
+		this.padestrian = padestrian;
 		this.next = next; 
 		this.light = light; 
 	} 
@@ -59,6 +75,8 @@ enum Lamp {
 		//If the lamp is not empty, At the same time, change direction lamp is corresponding to the state 
 		if(oppsite != null) 
 			Lamp.valueOf(oppsite).lightUp(); 
+		if(padestrian != null) 
+			Lamp.valueOf(padestrian).lightUp(); 
 	} 
 
 	//lightDownSaid the red light 
@@ -68,6 +86,7 @@ enum Lamp {
 
 		//If the lamp is not empty, At the same time, change direction lamp is corresponding to the state 
 		if(oppsite != null) Lamp.valueOf(oppsite).lightDown(); 
+		if(padestrian != null) Lamp.valueOf(padestrian).lightDown(); 
 
 		//Returns the next direction of the lamp 
 		if(next != null) return Lamp.valueOf(next);
@@ -83,6 +102,12 @@ class LampControler {
 	//Said the first light cycle control,Also for the light 
 	Lamp currentLamp = Lamp.S2N; 
 
+	public LampControler() {
+	}
+	
+	public Lamp getCurrentLitLamp(){
+		return currentLamp;
+	}
 	//Provides methods to control of traffic lights 
 	public void start(){ 
 
@@ -111,7 +136,7 @@ class Road {
 	// storage of vehicles set 
 	private List<String> vechicles = new LinkedList<String>(); 
 
-	public Road(String name){ 
+	public Road(String name, LampControler lc){ 
 		this.name = name; 
 
 		//A thread pool, Every1-5Seconds to produce a car 
@@ -125,7 +150,7 @@ class Road {
 					} catch (InterruptedException e) { 
 						e.printStackTrace(); 
 					} 
-					vechicles.add(Road.this.name+"_"+i); 
+					vechicles.add(Road.this.name);//+"_"+i); 
 				} 
 			} 
 		}); 
@@ -139,10 +164,10 @@ class Road {
 						//If a car on the road 
 						if(vechicles.size() > 0){ 
 							//If the lights are green 
-							if(Lamp.valueOf(Road.this.name).isLight()){ 
+							if(lc.getCurrentLitLamp().valueOf(Road.this.name).isLight()){ 
 								//Through a car 
 								String car = vechicles.remove(0); 
-								System.out.println(car+" has passed"); 
+								System.out.println("car in direction "+ car+" has passed"); 
 							} 
 						} 
 					} 
@@ -151,7 +176,7 @@ class Road {
 }
 
 public class TrafficSignal2 { 
-	
+
 	/*
 	 * 1. LampController will start with any lamp 
 	 * 2. Lit the lamp green , if opposite exist then lit opposite also green
@@ -161,15 +186,17 @@ public class TrafficSignal2 {
 	 * 6. Overall , road is producing (1-5 seconds) and consuming (every second) cars and lamp post is changing lights (every 10 seconds)
 	 * 7. main methods starts the controller and initializes the road objects which in turn starts producer consumer threads in constructor. 
 	 */
-	
+
 	public static void main(String[] args) { 
+
+		LampControler lc = new LampControler(); 
+		lc.start();
+
 		// create 12 routes the instance of 
 		Lamp[] lamps = Lamp.values(); 
 		for(int i = 0 ; i <lamps.length ; i ++){ 
-			new Road(lamps[i].name()); 
+			new Road(lamps[i].name(), lc); 
 		}
-		//The controller starts to work 
-		new LampControler().start(); 
 
 	} 	
 }

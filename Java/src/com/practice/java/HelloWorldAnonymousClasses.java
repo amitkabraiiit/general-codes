@@ -5,8 +5,9 @@ public class HelloWorldAnonymousClasses {
 
 	int i=0;
 	interface HelloWorld {
-		public void greet();
-		public void greetSomeone(String someone);
+		int a=0;
+		void greet(); // public keyword not required.
+		void greetSomeone(String someone);
 	}
 
 	public void sayHello() {

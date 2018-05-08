@@ -50,4 +50,10 @@ public class Game {
         return true;
     }
 
+    public static void main(String[] args) {
+    	Player p1 = new Player(true);
+    	Player p2 = new Player(false);
+    	p1.initializePieces();
+    	p2.initializePieces();
+	}    
 }

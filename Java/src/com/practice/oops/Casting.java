@@ -1,5 +1,7 @@
 package com.practice.oops;
 
+import java.io.Serializable;
+
 //Rules for inheritance and type Casting in Java.  Here, AA is a superclass.BB and CC both extends AA.  The same type-Casting rules apply if AA is 
 //an interface and BB and CC both implements AA.  The only difference would be that nothing will be inherited from AA.
 
@@ -26,7 +28,7 @@ typing for the function signature.
 */
 
 
-class AA  // super class
+class AA implements Serializable // super class
 {
 	void f() { System.out.println("AA.f being called"); }
 	void g() 
@@ -57,13 +59,22 @@ public class Casting
 		AA a1 = new AA();  
 		BB b1 = new BB();
 		CC c1 = new CC();
-		a1.g();  b1.g();  c1.h();  
+		a1.g(); 
+		// which f will be called?
+		// AA.f being called
+		b1.g();
+		// which f will be called?
+		// BB.f being called
+		c1.h();  // overridden f will be called
+		// CC.h being called
 		//////////////////////////////  nothing interesting so far.
 		System.out.println("===================");
 		AA aa1 = new BB(); 
 		AA aa2 = new CC();
 		AA n3;
 		aa1.g(); 
+		// which f will be called?
+		// BB.f being called
 		((CC)aa2).h();  // now OK
 
 		// ((CC)aa1).h();  // siblings can't be typecasted to each other , runtime error, because aa1 has dynamic type BB
@@ -77,25 +88,14 @@ public class Casting
 
 		// System.out.println(M[0].length()); // compiler error, The method length() is undefined for the type Object
 		System.out.println(((String)M[0]).length()); // ok now
+		// 3
 		//System.out.println(((String)M[1]).length()); // runtime error, java.lang.Double cannot be cast to java.lang.String
 
 		// now for a semi-tricky question:
 		((AA)b1).g(); // which f will g call?  (run to find out, then explain)
-
+		// which f will be called?
+		// BB.f being called
 	}
-	// Output
-	// which f will be called?
-	// AA.f being called
-	// which f will be called?
-	// BB.f being called
-	// CC.h being called
-	// which f will be called?
-	// BB.f being called
-	// CC.h being called
-	// 3
-	// which f will be called?
-	// BB.f being called
-
 }
 
 

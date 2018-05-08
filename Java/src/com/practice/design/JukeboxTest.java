@@ -3,6 +3,7 @@ package com.practice.design;
 import java.util.ArrayList;
 import java.util.List;
 
+// Storage device that stores songs.
 abstract class Media{
 	String name;
 	public List<Song> songList = new ArrayList<Song>();

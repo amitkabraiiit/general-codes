@@ -13,6 +13,32 @@ class Volt {
 	}
 }
 
+/*
+ * Overall : 
+ * 1) Converts the interface of a class into another interface that a client wants. 
+ * 2) Sometimes the problem you are solving is as simple as "I don't have the interface I want". 
+ * Two of the patterns in the list of GOF design patterns, Adapter, and Facade pattern solve this problem by providing an alternate interface.
+ */
+
+/*
+ * One of the great real life example of Adapter design pattern is mobile charger. 
+ * Mobile battery needs 3 volts to charge but the normal socket produces either 120V (US) or 240V (India). 
+ * So the mobile charger works as an adapter between mobile charging socket and the wall socket.
+ * We will try to implement multi-adapter using adapter design pattern in this tutorial.
+ * So first of all we will have two classes – Volt (to measure volts) and Socket (producing constant volts of 120V).
+ */
+
+/*
+ * It comes into place when you want to use an existing class, and its interface does not match the one you need, 
+ * or you want to create a reusable class that cooperates with unrelated classes with incompatible interfaces.
+ */
+
+/*
+ * Socket class below produced 120 v current.
+ * We want options to produce various amount of volts.
+ * So we can write an adaptor class. 
+ */
+
 class Socket {
 	public Volt getVolt(){
 		return new Volt(120);
@@ -34,16 +60,11 @@ class SocketClassAdapterImpl extends Socket implements SocketAdapter{
 	}
 	@Override
 	public Volt get12Volt() {
-		Volt v= getVolt();
-		return convertVolt(v,10);
+		return new Volt(getVolt().getVolts()/10);
 	}
 	@Override
 	public Volt get3Volt() {
-		Volt v= getVolt();
-		return convertVolt(v,40);
-	}
-	private Volt convertVolt(Volt v, int i) {
-		return new Volt(v.getVolts()/i);
+		return new Volt(getVolt().getVolts()/40);
 	}
 }
 
@@ -57,16 +78,11 @@ class SocketObjectAdapterImpl implements SocketAdapter{
 	}
 	@Override
 	public Volt get12Volt() {
-		Volt v= sock.getVolt();
-		return convertVolt(v,10);
+		return  new Volt(sock.getVolt().getVolts()/10);
 	}
 	@Override
 	public Volt get3Volt() {
-		Volt v= sock.getVolt();
-		return convertVolt(v,40);
-	}
-	private Volt convertVolt(Volt v, int i) {
-		return new Volt(v.getVolts()/i);
+		return  new Volt(sock.getVolt().getVolts()/40);
 	}
 }
 
@@ -86,7 +102,7 @@ public class Adaptor {
 		System.out.println("v12 volts using Class Adapter="+v12.getVolts());
 		System.out.println("v120 volts using Class Adapter="+v120.getVolts());
 	}
-	
+
 	private static void testObjectAdapter() {
 		SocketAdapter sockAdapter = new SocketObjectAdapterImpl();
 		Volt v3 = sockAdapter.get3Volt();

@@ -7,6 +7,7 @@ public class Bitwise {
 	private static void checkAllDigitOne(int num){
 		System.out.println(num & num);
 		System.out.println();
+
 	}
 
 	private static void variousBitwiseOpsJava(){

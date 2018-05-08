@@ -24,7 +24,7 @@ public class Player {
     public void initializePieces(){
         if(this.white == true){
             for(int i=0; i<PAWNS; i++){ // draw pawns
-                //pieces.add(new Pawn(true,i,2));
+                pieces.add(new Pawn(true,i,2));
             }
             pieces.add(new Rook(true, 0, 0));
             pieces.add(new Rook(true, 7, 0));
@@ -37,7 +37,7 @@ public class Player {
         }
         else{
             for(int i=0; i<PAWNS; i++){ // draw pawns
-            //    pieces.add(new Pawn(true,i,6));
+                pieces.add(new Pawn(true,i,6));
             }
             pieces.add(new Rook(true, 0, 7));
             pieces.add(new Rook(true, 7, 7));

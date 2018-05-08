@@ -19,8 +19,8 @@ public class CountSort {
        } 
        // c[1, 2, 1, 3, 1, 0, 0, 0, 0, 0] 
        
-       // element added to their previous positions. 
-       // by adding we know that before putting them into the array how many others should be put first. 
+       // count are added to their previous positions. 
+       // by adding we know that how many elements should be done till this index 
        for(int i=1;i<k;i++){ 
            c[i]=c[i]+c[i-1]; 
        } 

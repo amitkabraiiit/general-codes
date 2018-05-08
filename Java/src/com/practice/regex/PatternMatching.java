@@ -8,7 +8,7 @@ public class PatternMatching {
 	public void isLessThenThreeHundred(){
 		System.out.println("Is number less than 300");
 		String s[] = {"288","3288","328 8","1","99","300"};
-		for(String t : s)	System.out.println(Pattern.matches("[12]?[0-9]?[0-9]",t));
+		for(String t : s)	System.out.println("isLessThenThreeHundred "+t+" " +Pattern.matches("[12]?[0-9]?[0-9]",t));
 
 	}
 
@@ -18,14 +18,15 @@ public class PatternMatching {
 		String subp = "([01]?\\d?\\d|2[01234]\\d?|25[0-5]?)";
 		String pattern = subp+"."+subp+"."+subp+"."+subp;
 		String IP = "122.23";
-		System.out.println(Pattern.matches(pattern, IP));
+		System.out.println("isIP "+IP +" "+ Pattern.matches(pattern, IP));
 
 	}
 
 	public void backReference(){
 		System.out.println("inside backreferences");
 		System.out.println("a a".replaceAll("(\\w)(\\s+)(\\w)", "$1$3"));  // Removes whitespace between two characters	
-		System.out.println("<title>amit</title>".replaceAll("(?i)(<title.*?>)(.+?)(</title>)", "$2")); // This example extracts the text between a title tag. 
+		System.out.println("<title>amit</title>".replaceAll("(?i)(<title.*?>)(.+?)(</title>)", "$2")); // This example extracts the text between a title tag.
+		System.out.println("Done with backReference");
 	}
 
 	public void removeDuplicate(){
@@ -42,17 +43,19 @@ public class PatternMatching {
 			input = input.replaceAll(m.group(0),m.group(1));
 		}
 		System.out.println(input);
+		System.out.println("Done with finding duplicates");
+
 		
 	}
 
 
 public static void main(String[] args) {
-/*	System.out.println("Is the string an url");
+	System.out.println("Is the string an url");
 	System.out.println(Pattern.matches("(http[s]?|ftp)://.*","https://google.com/abcd" )); 
 	new PatternMatching().isLessThenThreeHundred(); // number should be less than 300
 	new PatternMatching().isIP();
 	new PatternMatching().backReference();
-	new PatternMatching().removeDuplicate();*/
+	new PatternMatching().removeDuplicate();
 	System.out.println(Pattern.matches("^[a-zA-Z][0-9a-zA-Z_]{7,29}","ct^4&t%j+V+-0U#~%F9=ZHXUYr" ));
 
 }

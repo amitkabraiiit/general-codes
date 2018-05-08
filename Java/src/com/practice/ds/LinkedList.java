@@ -111,6 +111,32 @@ public class LinkedList {
 		listCount--; // decrement the number of elements variable
 		return true;
 	}
+	
+	static Node reverseRec(Node head ){
+
+		if(head.next == null) {
+			Node newHead = head;
+			return newHead;
+		}
+		Node newHead = reverseRec(head.next);
+		head.next.next = head;
+		head.next = null;
+		return newHead;
+	}
+	static Node reverseItr(Node head){
+
+		Node newHead = head;
+		Node nextMem = head.next;
+		head.next = null;
+		Node temp = newHead;
+		while(nextMem != null){
+			temp = nextMem;
+			nextMem = nextMem.next;
+			temp.next = newHead;
+			newHead = temp;
+		}
+		return newHead;
+	}
 
 	public static Node reverseLL(Node currentHead)
 	{
@@ -132,6 +158,39 @@ public class LinkedList {
 		return currentHead;
 	}
 
+
+	public static Node reverseKNodes2(Node headerNode, int k)
+	{
+		int t = 1;
+		Node currentStart = headerNode;
+		Node newStart = null;
+		Node currentEnd = null;
+		Node prev = null, current=headerNode, next =null;
+		while(true){
+			currentStart = currentStart.next;
+			if(currentStart == null) break;
+			t++;
+			if(t%3 ==0){
+				currentEnd = currentStart;
+				newStart = currentStart.next;
+				// reverse currentStart to currentEnd
+
+				// something got deleted here in while condition , need to fix
+/*				while(){
+					next = current.next;
+					current.next = prev;
+					prev = current;
+					current = next;
+				}*/
+
+				// bootstrap for new start
+				currentStart = newStart;
+				t = 0;
+			}
+		}
+		return headerNode;
+	}
+
 	public static Node reverseKNodes(Node headerNode, int k)
 	{
 		// Take 3 pointers startNode, endNode, nextNode pointing to headerNode
@@ -141,21 +200,18 @@ public class LinkedList {
 		headerNode = null;
 		Node newStartNode = null;
 		Node tempNode = null;
-		while (true)
-		{
+		while (true){
 			//  startNode and endNode points to nextNode
 			startNode = nextNode;
 			endNode = nextNode;
 			//  Move endNode pointing towards node after k elements from startNode
-			for (int i = 1; i < k; i++)
-			{
+			for (int i = 1; i < k; i++){
 				endNode = endNode.next;
 				if (endNode == null)break;
 			}
 			// If endNode is not null, then reverse the list starting from startNode to endNode
-			// eles if endNode is null, then there is nothing to reverse
-			if (endNode != null)
-			{
+			// else if endNode is null, then there is nothing to reverse
+			if (endNode != null){
 				// Save the node next to endNode
 				nextNode = endNode.next;
 				//  Unlink the endNode
@@ -164,22 +220,15 @@ public class LinkedList {
 				newStartNode = reverseLL(startNode); // though the list reverses, start and end points to the
 				// same elements as they were pointing to earlier.
 			}
-			else
-			{
+			else{
 				tempNode.next = startNode;
 				break;
 			}
 			//  Point headerNode to the startNode of the first iteration.
 			//  If the headerNode is set, append the list startNode to the headerNode
-			if (headerNode == null)
-			{
-				headerNode = newStartNode;
-			}
-			else
-			{
-				// link end of nth list to the start of n+1th list
-				tempNode.next = endNode;
-			}
+			if (headerNode == null)	headerNode = newStartNode;
+			else tempNode.next = endNode; // link end of nth list to the start of n+1th list
+
 			// store end of nth k size list
 			tempNode = startNode;
 		}
@@ -243,6 +292,8 @@ public class LinkedList {
 
 
 
+
+
 	public int size()
 	{
 		return listCount;
@@ -292,7 +343,7 @@ public class LinkedList {
 		root.right = listToBSTBottomUp2(mid + 1, end);	         
 		return root;	
 	}
-	
+
 	static TNode listToBSTBottomUp(int n){
 		if(n <= 0) return null;   
 		// build left sub tree
@@ -306,27 +357,27 @@ public class LinkedList {
 		root.right = listToBSTBottomUp(n-n/2-1);	         
 		return root;	
 	}
-	
+
 	static TNode  listToBSTTopDown(int start,int end)
 	{
-	    if (start > end)
-	        return null;
-	    int mid = start+(end-start)/2;
-	    Node tempNode = temp;
-	    int i = 0;
-	    while(i<mid && temp.next!=null)
-	    {
-	    	tempNode = tempNode.next;
-	        i++;
-	    }
-	    TNode root = new TNode();
-	    root.data = (String)tempNode.data;
-	    root.left = listToBSTTopDown(start, mid-1);
-	    root.right = listToBSTTopDown(mid+1, end);
-	    return root;
+		if (start > end)
+			return null;
+		int mid = start+(end-start)/2;
+		Node tempNode = temp;
+		int i = 0;
+		while(i<mid && temp.next!=null)
+		{
+			tempNode = tempNode.next;
+			i++;
+		}
+		TNode root = new TNode();
+		root.data = (String)tempNode.data;
+		root.left = listToBSTTopDown(start, mid-1);
+		root.right = listToBSTTopDown(mid+1, end);
+		return root;
 	}
 
-	
+
 	public static void inorderTraversal(TNode root){
 		if(root == null)return;
 		inorderTraversal(root.left);

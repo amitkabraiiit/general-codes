@@ -2,50 +2,73 @@ package com.practice.sorting;
 
 import java.util.Arrays;
 
+// SEE HEAP2.JAVA and HEAP.JAVA as well for heap implementation.
 public class HeapSort 
 { 
-	private static int n; 
-	private static int left; 
-	private static int right; 
-	private static int max;
+	// Max Heap
+	public void sort(int arr[])
+	{
+		int n = arr.length;
 
-	public static void swap(int[] a, int i, int j){ 
-		int t=a[i]; 
-		a[i]=a[j]; 
-		a[j]=t; 
-	} 
-	public static void heapSort(int []a){// Overall:O(nlog(n)) (no of time loop run)*(maxheap complexity)
-		n=a.length-1;
-		buildheap(a); 
-		System.out.println(Arrays.toString(a));
-		for(int i=n;i>0;i--){ 
-			swap(a, 0, i); 
-			n=n-1; 
-			maxheap(a, 0); 
-		} 
-	} 	
-	public static void buildheap(int []a){  // we are building max heap here. Overall : O(n)
-		for(int i=n/2;i>=0;i--){  
-			maxheap(a,i); 
-		} 
-	} 
-	public static void maxheap(int[] a, int i){  // or heapify function. Overall : O(log n)
-		/* sift down */
-		left=2*i; 
-		right=2*i+1; 
-		max = i;
-		if(left <= n && a[left] > a[max])max=left;  
-		if(right <= n && a[right] > a[max])max=right; 
-		if(max!=i){ 
-			swap(a, i,max); 
-			maxheap(a, max); 
-		} 
-	} 
-	public static void main(String[] args) { 
-		int []a1={4,1,3,2,16,9,10,14,8,7}; 
-		heapSort(a1); 
-		for(int i=0;i<a1.length;i++){ 
-			System.out.print(a1[i] + " "); 
-		} 
-	} 
+		// Given array is heap for us. So elements in array is heap
+		
+		// Convert it to heap to max heap
+		for (int i = n / 2 - 1; i >= 0; i--)
+			heapify(arr, n, i);
+
+		System.out.println("Max Heap "+ Arrays.toString(arr));
+		// Sort heap : One by one extract an element from heap
+		for (int i=n-1; i>=0; i--){
+			// Move current root to end
+			int temp = arr[0];
+			arr[0] = arr[i];
+			arr[i] = temp;
+
+			// call max heapify on the REDUCED heap
+			heapify(arr, i, 0); // see the position of i changed as compared to heapify called above,now i is max and we heapify from 0.
+		}
+	}
+
+	// To heapify a subtree rooted with node i which is an index in arr[]. n is size of heap
+	void heapify(int arr[], int heapsize, int i){  // also a siftDown.
+		int largest = i;  // Initialize largest as root
+		int l = 2*i + 1;  // left = 2*i + 1
+		int r = 2*i + 2;  // right = 2*i + 2
+
+		if (l < heapsize && arr[l] > arr[largest])	largest = l;
+		if (r < heapsize && arr[r] > arr[largest])	largest = r;
+
+		// If largest is not root
+		if (largest != i){
+			int swap = arr[i];
+			arr[i] = arr[largest];
+			arr[largest] = swap;
+
+			// Recursively heapify the affected sub-tree
+			System.out.println("Original array "+ Arrays.toString(arr));
+			heapify(arr, heapsize, largest);
+		}
+	}
+
+	/* A utility function to print array of size n */
+	static void printArray(int arr[])
+	{
+		int n = arr.length;
+		for (int i=0; i<n; ++i)
+			System.out.print(arr[i]+" ");
+		System.out.println();
+	}
+
+	// Driver program
+	public static void main(String args[])
+	{
+		int arr[] = {12, 11, 13, 5, 6, 7};
+		int n = arr.length;
+
+		System.out.println("Original array "+ Arrays.toString(arr));
+		HeapSort ob = new HeapSort();
+		ob.sort(arr);
+
+		System.out.println("Sorted array "+ Arrays.toString(arr));
+	}
 }

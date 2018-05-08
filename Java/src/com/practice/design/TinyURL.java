@@ -9,10 +9,11 @@ public class TinyURL {
 
 		System.out.println("Base : "+BASE);
 		while ( toEncode > 0 ) {
-			System.out.println("========");
+			/*System.out.println("========");
 			System.out.println("toEncode is :"+toEncode);
 			System.out.println("toEncode % BASE , i.e "+toEncode+" %"+ BASE+" is : "+toEncode % BASE);
 			System.out.println("Encoded string till now :"+ALPHABET_MAP.charAt ( toEncode % BASE ));
+			*/
 			sb.append ( ALPHABET_MAP.charAt ( toEncode % BASE ) ) ;		
 			toEncode /= BASE ;
 		}
@@ -31,6 +32,10 @@ public class TinyURL {
 	public static void main ( String[] args ) {
 		System.out.println(encode(123)) ; // prints b9
 		System.out.println(decode("b9")) ; // prints 123
+		System.out.println(encode(124)) ; // prints b9
+		System.out.println(decode("b9")) ; // prints 123
+		StringBuilder s = new StringBuilder("abc");
+		System.out.println(s.insert(0, "d"));
 	}
 }
 

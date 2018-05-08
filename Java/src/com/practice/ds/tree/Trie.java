@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Better look at Trie2
+
 class TrieNode implements Comparable<TrieNode> {
 	private final char character;
 	private boolean isWord = false;

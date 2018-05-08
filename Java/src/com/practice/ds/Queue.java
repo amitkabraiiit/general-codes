@@ -70,8 +70,6 @@ class QueueWithArray<T> {
 
 public class Queue{
 
-
-
 	/*
 	 * In this queue implementation, we maintain first pointer , last pointer and count variable.
 	 */
@@ -162,7 +160,5 @@ public class Queue{
 			System.out.print(" ");
 		}
 		System.out.println("");*/
-
-
 	}
 }

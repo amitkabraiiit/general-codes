@@ -6,6 +6,20 @@ public class LongestCommonSubsequence {
 	static int arr[][];
 	static String newString = "";
 
+	
+	static String lcsPrintRecursive( String x, String y)
+	{
+		if(x.equals("") || y.equals("")) return "";
+		if(x.charAt(0) == y.charAt(0)) return x.charAt(0) + lcsPrintRecursive(x.substring(1), y.substring(1));
+		else return maxString(lcsPrintRecursive(x, y.substring(1)),lcsPrintRecursive(x.substring(1), y));
+			
+	}
+	
+	static String maxString(String s1, String s2){
+		if(s1.length() > s2.length()) return s1;
+		else return s2;
+	}
+	
 	/* Returns length of LCS for X[0..m-1], Y[0..n-1] */
 	static String lcsPrint( String x, String y, int m, int n)
 	{
@@ -70,6 +84,7 @@ public class LongestCommonSubsequence {
 			}
 			System.out.println();
 		}
-		
+		System.out.println("LCS of "+X+ " and "+Y+" is "+ lcsPrint( X, Y, m, n ) );
+		System.out.println("LCS of "+X+ " and "+Y+" is "+ lcsPrintRecursive(X, Y));
 	}
 }

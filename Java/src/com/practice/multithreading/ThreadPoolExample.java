@@ -11,8 +11,8 @@ public class ThreadPoolExample {
        for (int i =0; i<8; i++){
            service.execute(new Task(i));
        }
+       service.shutdown();
     }
-  
 }
 
 final class Task implements Runnable{

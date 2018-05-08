@@ -1,6 +1,17 @@
 package com.practice.dp;
 
 public class KnapSackWorking {
+	
+	
+	static int func(int [] a,int index, int target, int achieved){
+		if(index == a.length )return achieved;
+		int ans1 = func(a,index+1, target , achieved);
+		int ans2 = func(a,index+1, target , achieved + a[index]);
+		if(ans1 <= target && ans1 >= ans2) return ans1;
+		if(ans2 <= target && ans2 >= ans1) return ans2;
+		return 0;
+	}
+	
 	static int knapSack(int W, int wt[], int val[], int n)
 	{
 		/*
@@ -67,7 +78,8 @@ public class KnapSackWorking {
 		int  W = 50;
 		int n = wt.length;
 		System.out.println(knapSack(W, wt, val, n-1));
-
+		int[]arr={4,6,3,9,1,7,8};
+		System.out.println("container answer "+func(arr,0,19,0));
 	}
 
 }

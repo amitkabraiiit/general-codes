@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
-class CallableThread implements Callable<Integer>{
+class CallableThread implements Callable<Integer>{ // could be string
 	@Override
 	public Integer call() throws Exception {
 		return 10;		

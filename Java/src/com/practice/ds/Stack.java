@@ -224,5 +224,7 @@ public class Stack{
 		ts.push(2,new Integer(40));
 		ts.push(1,new Integer(50));	
 		ts.push(2,new Integer(50));
+		
+
 	}
 }
